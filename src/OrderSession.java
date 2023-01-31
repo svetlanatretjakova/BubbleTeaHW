@@ -4,11 +4,14 @@ import java.util.List;
 public class OrderSession extends Subject {
     private static OrderSession instance;
     private boolean sessionInProgress;
-
-
+    private List<BubbleTea> orders = new ArrayList<>();
 
     private OrderSession() {
         this.sessionInProgress = false;
+    }
+
+    public boolean isSessionInProgress() {
+        return sessionInProgress;
     }
 
     public static OrderSession getInstance() {
@@ -24,14 +27,17 @@ public class OrderSession extends Subject {
             notifyObservers(bubbleTea);
             return bubbleTea;
         } else {
-            System.out.println("Ordering is in process, wait");
+            System.out.println("A session is already in progress, wait for it to finish or start a new session");
             return null;
         }
     }
 
     public void finishOrderSession() {
-        sessionInProgress = false;
+        if (orders.isEmpty()) {
+            sessionInProgress = false;
+        } else {
+            BubbleTea bubbleTea = orders.remove(0);
+            notifyObservers(bubbleTea);
+        }
     }
-
-
 }

@@ -7,4 +7,9 @@ public class VanillaTapiocaDecorator extends BubbleTeaDecorator implements Tapio
     public double cost() {
         return super.cost() + vanillaCost;
     }
+
+    @Override
+    public String description() {
+        return "Tea with vanilla tapioca";
+    }
 }
